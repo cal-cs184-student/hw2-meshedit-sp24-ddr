@@ -16,11 +16,15 @@ namespace CGL
   std::vector<Vector2D> BezierCurve::evaluateStep(std::vector<Vector2D> const &points)
   { 
     // TODO Part 1.
-    return std::vector<Vector2D>();
+    std::vector<Vector2D> res = std::vector<Vector2D>();
+    for (int i = 0; i < points.size() - 1; i++) {
+        res.push_back(((1 - t) * points[i]) + (t * points[i + 1]));
+    }
+    return res;
   }
 
   /**
-   * Evaluates one step of the de Casteljau's algorithm using the given points and
+   * Evaluates one Sstep of the de Casteljau's algorithm using the given points and
    * the scalar parameter t (function parameter).
    *
    * @param points    A vector of points in 3D
