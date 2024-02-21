@@ -15,7 +15,7 @@ namespace CGL
    */
   std::vector<Vector2D> BezierCurve::evaluateStep(std::vector<Vector2D> const &points)
   { 
-    // TODO Part 1.
+    // Part 1 --Before Part 2 
     std::vector<Vector2D> res = std::vector<Vector2D>();
     for (int i = 0; i < points.size() - 1; i++) {
         res.push_back(((1 - t) * points[i]) + (t * points[i + 1]));
@@ -34,7 +34,12 @@ namespace CGL
   std::vector<Vector3D> BezierPatch::evaluateStep(std::vector<Vector3D> const &points, double t) const
   {
     // TODO Part 2.
-    return std::vector<Vector3D>();
+   
+    std::vector<Vector3D> res = std::vector<Vector3D>();
+    for (int i = 0; i < points.size() - 1; i++) {
+        res.push_back(((1 - t) * points[i]) + (t * points[i + 1]));
+    }
+    return res;
   }
 
   /**
@@ -46,8 +51,14 @@ namespace CGL
    */
   Vector3D BezierPatch::evaluate1D(std::vector<Vector3D> const &points, double t) const
   {
+
     // TODO Part 2.
-    return Vector3D();
+      std::vector<Vector3D> res = std::vector<Vector3D>();
+      res = points;
+      for (int i = 0; i < points.size() - 1; i++) {
+          res = evaluateStep(res, t);
+      }
+      return res[0];
   }
 
   /**
@@ -60,7 +71,12 @@ namespace CGL
   Vector3D BezierPatch::evaluate(double u, double v) const 
   {  
     // TODO Part 2.
-    return Vector3D();
+    std::vector<Vector3D> intermediatePoints = std::vector<Vector3D>();
+
+    for (int i = 0; i < controlPoints.size(); i++) {
+		intermediatePoints.push_back(evaluate1D(controlPoints[i], u));
+    }
+    return evaluate1D(intermediatePoints, v);
   }
 
   Vector3D Vertex::normal( void ) const
