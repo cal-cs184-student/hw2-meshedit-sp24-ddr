@@ -85,7 +85,43 @@ namespace CGL
     // Returns an approximate unit normal at this vertex, computed by
     // taking the area-weighted average of the normals of neighboring
     // triangles, then normalizing.
-    return Vector3D();
+
+    // Calculate the vectors of the face
+    HalfedgeCIter h = Vertex::halfedge();
+    std::vector<Vector3D> vectors = std::vector<Vector3D>();
+    do {
+        HalfedgeCIter hTwin = h->twin();
+        HalfedgeCIter hNext = h->next();
+        HalfedgeCIter hNext2 = hNext->next();
+        /*cout << "h isBound() " << h->isBoundary() << endl;
+        cout << "hTwin isBound() " << hTwin->isBoundary() << endl;*/
+        cout << "Halfedge address" << &h << endl;
+       /* cout << "Halfedge Twin address" << &hTwin << endl;
+        cout << "Halfedge Next address" << &hNext << endl;
+        cout << "Halfedge Next2 address" << &hNext2 << endl;*/
+        double x0 = hNext->vertex()->position[0] - this->position[0];
+        double y0 = hNext->vertex()->position[1] - this->position[1];
+        double z0 = hNext->vertex()->position[2] - this->position[2];
+        Vector3D vec0 = Vector3D(x0, y0, z0);
+
+        double x1 = hNext2->vertex()->position[0] - this->position[0];
+        double y1 = hNext2->vertex()->position[1] - this->position[1];
+        double z1 = hNext2->vertex()->position[2] - this->position[2];
+        Vector3D vec1 = Vector3D(x1, y1, z1);
+
+        Vector3D normVec = cross(vec0, vec1) * 0.5f;
+        vectors.push_back(normVec);
+
+        h = hTwin->next();
+        cout << "Halfedge update address" << &h << endl;
+    } while (h != Vertex::halfedge());
+
+    // Sum the normal vectors and normalize
+    Vector3D sumVec = Vector3D(0.0f, 0.0f, 0.0f);
+    for (int i = 0; i < vectors.size(); i++) {
+        sumVec += vectors[i];
+    }
+    return sumVec.norm();
   }
 
   EdgeIter HalfedgeMesh::flipEdge( EdgeIter e0 )
