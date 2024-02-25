@@ -88,6 +88,7 @@ namespace CGL
 
     // Calculate the vectors of the face
     HalfedgeCIter h = Vertex::halfedge();
+    HalfedgeCIter startingH = h;
     std::vector<Vector3D> vectors = std::vector<Vector3D>();
     do {
         HalfedgeCIter hTwin = h->twin();
@@ -96,7 +97,7 @@ namespace CGL
         /*cout << "h isBound() " << h->isBoundary() << endl;
         cout << "hTwin isBound() " << hTwin->isBoundary() << endl;*/
         cout << "Halfedge address" << &h << endl;
-       /* cout << "Halfedge Twin address" << &hTwin << endl;
+        /*cout << "Halfedge Twin address" << &hTwin << endl;
         cout << "Halfedge Next address" << &hNext << endl;
         cout << "Halfedge Next2 address" << &hNext2 << endl;*/
         double x0 = hNext->vertex()->position[0] - this->position[0];
@@ -114,14 +115,15 @@ namespace CGL
 
         h = hTwin->next();
         cout << "Halfedge update address" << &h << endl;
-    } while (h != Vertex::halfedge());
+    } while (h != startingH);
 
     // Sum the normal vectors and normalize
     Vector3D sumVec = Vector3D(0.0f, 0.0f, 0.0f);
     for (int i = 0; i < vectors.size(); i++) {
         sumVec += vectors[i];
     }
-    return sumVec.norm();
+    /*cout << sumVec / vectors.size() << endl;*/
+    return sumVec / vectors.size();
   }
 
   EdgeIter HalfedgeMesh::flipEdge( EdgeIter e0 )
