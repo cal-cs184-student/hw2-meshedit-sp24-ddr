@@ -125,6 +125,39 @@ namespace CGL
      Vertex a = *e0->halfedge()->next()->next()->vertex();
      Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
 
+
+
+
+     /* FOR TESTING */
+     HalfedgeIter startH = e0->halfedge();
+     HalfedgeIter h = startH->next();
+     std::list<Vector3D> vertices = std::list<Vector3D>();
+     while (h != startH) {
+         vertices.push_back(h->vertex()->position);
+         h = h->next();
+     }
+
+     startH = h->twin();
+     h = startH->next();
+     while (h != startH) {
+         vertices.push_back(h->vertex()->position);
+         h = h->next();
+     }   
+     
+     cout << "verticies: "  << endl;
+     for (Vector3D v : vertices) {
+         cout << "vertex: " << v << endl;
+     }
+
+
+     cout << "original edge" << endl;
+     cout << "a: " << e0->halfedge()->vertex()->position << endl;
+     cout << "b: " << e0->halfedge()->next()->vertex()->position << endl;;
+
+     cout << "new edge" << endl;
+     cout << "a': " << a.position << endl;
+     cout << "b': " << b.position << endl;
+
      return EdgeIter();
   }
 
