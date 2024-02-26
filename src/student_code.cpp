@@ -91,15 +91,8 @@ namespace CGL
     HalfedgeCIter startingH = h;
     std::vector<Vector3D> vectors = std::vector<Vector3D>();
     do {
-        HalfedgeCIter hTwin = h->twin();
         HalfedgeCIter hNext = h->next();
         HalfedgeCIter hNext2 = hNext->next();
-        /*cout << "h isBound() " << h->isBoundary() << endl;
-        cout << "hTwin isBound() " << hTwin->isBoundary() << endl;*/
-        cout << "Halfedge address" << &h << endl;
-        /*cout << "Halfedge Twin address" << &hTwin << endl;
-        cout << "Halfedge Next address" << &hNext << endl;
-        cout << "Halfedge Next2 address" << &hNext2 << endl;*/
         double x0 = hNext->vertex()->position[0] - this->position[0];
         double y0 = hNext->vertex()->position[1] - this->position[1];
         double z0 = hNext->vertex()->position[2] - this->position[2];
@@ -113,8 +106,7 @@ namespace CGL
         Vector3D normVec = cross(vec0, vec1) * 0.5f;
         vectors.push_back(normVec);
 
-        h = hTwin->next();
-        cout << "Halfedge update address" << &h << endl;
+        h = h->twin()->next();
     } while (h != startingH);
 
     // Sum the normal vectors and normalize
@@ -122,8 +114,7 @@ namespace CGL
     for (int i = 0; i < vectors.size(); i++) {
         sumVec += vectors[i];
     }
-    /*cout << sumVec / vectors.size() << endl;*/
-    return sumVec / vectors.size();
+    return sumVec / sumVec.norm();
   }
 
   EdgeIter HalfedgeMesh::flipEdge( EdgeIter e0 )
