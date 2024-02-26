@@ -121,7 +121,11 @@ namespace CGL
   {
     // TODO Part 4.
     // This method should flip the given edge and return an iterator to the flipped edge.
-    return EdgeIter();
+    // Get the vertex of the new edge
+     Vertex a = *e0->halfedge()->next()->next()->vertex();
+     Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
+
+     return EdgeIter();
   }
 
   VertexIter HalfedgeMesh::splitEdge( EdgeIter e0 )
