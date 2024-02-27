@@ -131,11 +131,27 @@ namespace CGL
     // Vertex - (TODO: the halfedge that'll never change is the one not connected to
     // the split and has the vertex as its origin?)
 
+   // vertex = e0->halfedge()->twin()->next(); 
+
     // Edge - (TODO: can reassign to the same halfedge? even if its orientation is
     // changed, it'll still end up on the edge)
 
+    // e0->halfedge()
+
+
     // Face - (TODO: can always assign the halfedge that's in this face and along the
     // edge?)
+
+    // e0->halfedge()->face()->newHalfedge
+
+
+    //void setNeighbors( HalfedgeIter next,
+    //                        HalfedgeIter twin,
+    //                        VertexIter vertex,
+    //                        EdgeIter edge,
+    //                        FaceIter face )
+    //     {
+
 
     // Get the vertex of the new edge
     Vertex a = *e0->halfedge()->next()->next()->vertex();
