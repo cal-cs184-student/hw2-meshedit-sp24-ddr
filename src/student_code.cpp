@@ -129,7 +129,7 @@ namespace CGL
 
     // Set the halfedge pointer of each vertex, edge, and face
     // Vertex - (TODO: the halfedge that'll never change is the one not connected to
-    // an edge and has the vertex as its vertex?)
+    // the split and has the vertex as its origin?)
 
     // Edge - (TODO: can reassign to the same halfedge? even if its orientation is
     // changed, it'll still end up on the edge)
