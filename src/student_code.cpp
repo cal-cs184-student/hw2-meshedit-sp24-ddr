@@ -121,44 +121,74 @@ namespace CGL
   {
     // TODO Part 4.
     // This method should flip the given edge and return an iterator to the flipped edge.
+    
+    // Check for boundary loops
+    if (e0->halfedge()->face()->isBoundary() || e0->halfedge()->twin()->face()->isBoundary()) {
+        return EdgeIter();
+    }
+
+    // Set the halfedge pointer of each vertex, edge, and face
+    // Vertex - (TODO: the halfedge that'll never change is the one not connected to
+    // an edge and has the vertex as its vertex?)
+
+    // Edge - (TODO: can reassign to the same halfedge? even if its orientation is
+    // changed, it'll still end up on the edge)
+
+    // Face - (TODO: can always assign the halfedge that's in this face and along the
+    // edge?)
+
     // Get the vertex of the new edge
-     Vertex a = *e0->halfedge()->next()->next()->vertex();
-     Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
+    Vertex a = *e0->halfedge()->next()->next()->vertex();
+    Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
 
-
-
-
-     /* FOR TESTING */
-     HalfedgeIter startH = e0->halfedge();
-     HalfedgeIter h = startH->next();
-     std::list<Vector3D> vertices = std::list<Vector3D>();
-     while (h != startH) {
-         vertices.push_back(h->vertex()->position);
-         h = h->next();
-     }
-
-     startH = h->twin();
-     h = startH->next();
-     while (h != startH) {
-         vertices.push_back(h->vertex()->position);
-         h = h->next();
-     }   
      
-     cout << "verticies: "  << endl;
-     for (Vector3D v : vertices) {
-         cout << "vertex: " << v << endl;
-     }
+     
+    // Update the pointers for this edge's halfedge
+    HalfedgeCIter currHalfedge = e0->halfedge();
+    // Twin - should be the same (TODO: change the pointers of the twin)
+    HalfedgeCIter currTwin = currHalfedge->twin();
+    currHalfedge->twin() = currTwin;
+    // Next -
+
+    // Vertex - (TODO: is this logic correct? the new v will always be
+    // halfedge()->next()->next()->vertex())
+    currHalfedge->vertex() = e0->halfedge()->next()->next()->vertex();
+
+    // Edge - 
+
+    // Face - 
 
 
-     cout << "original edge" << endl;
-     cout << "a: " << e0->halfedge()->vertex()->position << endl;
-     cout << "b: " << e0->halfedge()->next()->vertex()->position << endl;;
+    /* FOR TESTING */
+    HalfedgeIter startH = e0->halfedge();
+    HalfedgeIter h = startH->next();
+    std::list<Vector3D> vertices = std::list<Vector3D>();
+    while (h != startH) {
+        vertices.push_back(h->vertex()->position);
+        h = h->next();
+    }
 
-     cout << "new edge" << endl;
-     cout << "a': " << a.position << endl;
-     cout << "b': " << b.position << endl;
+    startH = h->twin();
+    h = startH->next();
+    while (h != startH) {
+        vertices.push_back(h->vertex()->position);
+        h = h->next();
+    }   
+     
+    cout << "vertices: "  << endl;
+    for (Vector3D v : vertices) {
+        cout << "vertex: " << v << endl;
+    }
 
-     return EdgeIter();
+    cout << "original edge" << endl;
+    cout << "a: " << e0->halfedge()->vertex()->position << endl;
+    cout << "b: " << e0->halfedge()->next()->vertex()->position << endl;;
+
+    cout << "new edge" << endl;
+    cout << "a': " << a.position << endl;
+    cout << "b': " << b.position << endl;
+
+    return EdgeIter();
   }
 
   VertexIter HalfedgeMesh::splitEdge( EdgeIter e0 )
