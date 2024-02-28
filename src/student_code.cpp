@@ -153,6 +153,9 @@ namespace CGL
 
     // Halfedges:
 
+    cout << "Before: " << endl;
+    check_for(e0);
+
     HalfedgeIter h0 = e0->halfedge();
     HalfedgeIter h1 = h0->next();
     HalfedgeIter h2 = h1->next();
@@ -173,19 +176,17 @@ namespace CGL
 
     // Edges:
 
-
-    EdgeIter e0 = e0;
     EdgeIter e1 = h1->edge();
     EdgeIter e2 = h2->edge();
     EdgeIter e3 = h4->edge();
-    EdgeIter e4 = h6->edge();
+    EdgeIter e4 = h5->edge();
 
     // Faces:
 
     FaceIter f0 = h0->face();
     FaceIter f1 = h3->face();
 
-    /* AFTER FLIP */
+    /*-----AFTER FLIP----*/
 
     // Halfedges:
 
@@ -195,69 +196,138 @@ namespace CGL
     h0->edge() = e0;
     h0->face() = f0;
 
+    /* OR use  h0->setNeighbors(h1, h3, v3, e0, f0); */
+
+    h1->next() = h2;
+    h1->twin() = h7;
+    h1->vertex() = v2;
+    h1->edge() = e2;
+    h1->face() = f0;
+
+    h2->next() = h0;
+    h2->twin() = h8;
+    h2->vertex() = v0;
+    h2->edge() = e3;
+    h2->face() = f0;
+
+    h3->next() = h4;
+    h3->twin() = h0;
+    h3->vertex() = v2;
+    h3->edge() = e0;
+    h3->face() = f1;
+
+    h4->next() = h5;
+    h4->twin() = h9;
+    h4->vertex() = v3;
+    h4->edge() = e4;
+    h4->face() = f1;
+
+    h5->next() = h3;
+    h5->twin() = h6;
+    h5->vertex() = v1;
+    h5->edge() = e1;
+    h5->face() = f1;
+
+    h6->next() = h6->next();
+    h6->twin() = h5;
+    h6->vertex() = h6->vertex();
+    h6->edge() = h6->edge();
+    h6->face() = h6->face();
+
+    h7->next() = h7->next();
+    h7->twin() = h1;
+    h7->vertex() = h7->vertex();
+    h7->edge() = h7->edge();
+    h7->face() = h7->face();
+
+    h8->next() = h8->next();
+    h8->twin() = h2;
+    h8->vertex() = h8->vertex();
+    h8->edge() = h8->edge();
+    h8->face() = h8->face();
+
+    h9->next() = h9->next();
+    h9->twin() = h4;
+    h9->vertex() = h9->vertex();
+    h9->edge() = h9->edge();
+    h9->face() = h9->face();
+
+
     // Vertices:
 
-    v0->halfedge() = h5;
-    v1->halfedge() = h2;
+    v0->halfedge() = h2;
+    v1->halfedge() = h5;
+    v2->halfedge() = h3;
+    v3->halfedge() = h0;
+
+    // Edges:
+    e0->halfedge() = h0;
+    e1->halfedge() = h5;
+    e2->halfedge() = h1;
+    e3->halfedge() = h2;
+    e4->halfedge() = h4;
 
 
+    // Faces:
+    f0->halfedge() = h0;
+    f1->halfedge() = h3;
+
+    cout << "After: " << endl;
+    check_for(e0);
 
 
+    //// Get the vertex of the new edge
+    //Vertex a = *e0->halfedge()->next()->next()->vertex();
+    //Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
+
+    // 
+    // 
+    //// Update the pointers for this edge's halfedge
+    //HalfedgeCIter currHalfedge = e0->halfedge();
+    //// Twin - should be the same (TODO: change the pointers of the twin)
+    //HalfedgeCIter currTwin = currHalfedge->twin();
+    //currHalfedge->twin() = currTwin;
+    //// Next -
+
+    //// Vertex - (TODO: is this logic correct? the new v will always be
+    //// halfedge()->next()->next()->vertex())
+    //currHalfedge->vertex() = e0->halfedge()->next()->next()->vertex();
+
+    //// Edge - 
+
+    //// Face - 
 
 
+    ///* FOR TESTING */
+    //HalfedgeIter startH = e0->halfedge();
+    //HalfedgeIter h = startH->next();
+    //std::list<Vector3D> vertices = std::list<Vector3D>();
+    //while (h != startH) {
+    //    vertices.push_back(h->vertex()->position);
+    //    h = h->next();
+    //}
 
-    // Get the vertex of the new edge
-    Vertex a = *e0->halfedge()->next()->next()->vertex();
-    Vertex b = *e0->halfedge()->twin()->next()->next()->vertex();
+    //startH = h->twin();
+    //h = startH->next();
+    //while (h != startH) {
+    //    vertices.push_back(h->vertex()->position);
+    //    h = h->next();
+    //}   
+    // 
+    //cout << "vertices: "  << endl;
+    //for (Vector3D v : vertices) {
+    //    cout << "vertex: " << v << endl;
+    //}
 
-     
-     
-    // Update the pointers for this edge's halfedge
-    HalfedgeCIter currHalfedge = e0->halfedge();
-    // Twin - should be the same (TODO: change the pointers of the twin)
-    HalfedgeCIter currTwin = currHalfedge->twin();
-    currHalfedge->twin() = currTwin;
-    // Next -
+    //cout << "original edge" << endl;
+    //cout << "a: " << e0->halfedge()->vertex()->position << endl;
+    //cout << "b: " << e0->halfedge()->next()->vertex()->position << endl;;
 
-    // Vertex - (TODO: is this logic correct? the new v will always be
-    // halfedge()->next()->next()->vertex())
-    currHalfedge->vertex() = e0->halfedge()->next()->next()->vertex();
+    //cout << "new edge" << endl;
+    //cout << "a': " << a.position << endl;
+    //cout << "b': " << b.position << endl;
 
-    // Edge - 
-
-    // Face - 
-
-
-    /* FOR TESTING */
-    HalfedgeIter startH = e0->halfedge();
-    HalfedgeIter h = startH->next();
-    std::list<Vector3D> vertices = std::list<Vector3D>();
-    while (h != startH) {
-        vertices.push_back(h->vertex()->position);
-        h = h->next();
-    }
-
-    startH = h->twin();
-    h = startH->next();
-    while (h != startH) {
-        vertices.push_back(h->vertex()->position);
-        h = h->next();
-    }   
-     
-    cout << "vertices: "  << endl;
-    for (Vector3D v : vertices) {
-        cout << "vertex: " << v << endl;
-    }
-
-    cout << "original edge" << endl;
-    cout << "a: " << e0->halfedge()->vertex()->position << endl;
-    cout << "b: " << e0->halfedge()->next()->vertex()->position << endl;;
-
-    cout << "new edge" << endl;
-    cout << "a': " << a.position << endl;
-    cout << "b': " << b.position << endl;
-
-    return EdgeIter();
+    return e0;
   }
 
   VertexIter HalfedgeMesh::splitEdge( EdgeIter e0 )
