@@ -325,6 +325,13 @@ namespace CGL
   void MeshResampler::upsample( HalfedgeMesh& mesh )
   {
     // TODO Part 6.
+    
+    /*  Summmary:
+    Step A : Compute the positions of both new and old vertices using the original mesh.We want to perform these computations before subdivision because traversing a coarse mesh is much easier than traversing a subdivided mesh with more elements.
+    Step B : Subdivide the original mesh via edge splits and flips as described.
+    Step C : Update all vertex positions in the subdivided mesh using the values already computed
+    */
+
     // This routine should increase the number of triangles in the mesh using Loop subdivision.
     // One possible solution is to break up the method as listed below.
 
@@ -342,6 +349,5 @@ namespace CGL
     // 4. Flip any new edge that connects an old and new vertex.
 
     // 5. Copy the new vertex positions into final Vertex::position.
-
   }
 }
