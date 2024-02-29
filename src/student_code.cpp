@@ -314,6 +314,7 @@ namespace CGL
 
     e6->isNew = true;
     e7->isNew = true;
+
     // Faces:
     f0->halfedge() = h0;
     f1->halfedge() = h13;
@@ -341,6 +342,8 @@ namespace CGL
     // 1. Compute new positions for all the vertices in the input mesh, using the Loop subdivision rule,
     // and store them in Vertex::newPosition. At this point, we also want to mark each vertex as being
     // a vertex of the original mesh
+
+      cout << "Start 1" << endl;
     for (VertexIter v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++) {
         /* Sum neighboring vertices*/
         HalfedgeIter h = v->halfedge();
@@ -367,7 +370,6 @@ namespace CGL
         v->isNew = false;
 	}
 
-    
     // 2. Compute the updated vertex positions associated with edges, and store it in Edge::newPosition.
     
     for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++) {
@@ -385,9 +387,13 @@ namespace CGL
     // information about which subdivide edges come from splitting an edge in the original mesh, and which edges
     // are new, by setting the flat Edge::isNew. Note that in this loop, we only want to iterate over edges of
     // the original mesh---otherwise, we'll end up splitting edges that we just split (and the loop will never end!)
-    for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++) {
-        VertexIter newVertex = mesh.splitEdge(e);
-        newVertex->isNew = true;
+
+    for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd() && !e->isNew; e++) {
+        if (!e->isNew) {
+            VertexIter newVertex = mesh.splitEdge(e);
+            newVertex->isNew = true;
+            newVertex->newPosition = e->newPosition;
+        }
     }
 
     // 4. Flip any new edge that connects an old and new vertex.
@@ -402,22 +408,25 @@ namespace CGL
         }
     }
 
-
     // 5. Copy the new vertex positions into final Vertex::position.
     for (VertexIter v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++) {
         v->position = v->newPosition;
+        
     }
+
+    cout << "done" << endl;
   }
 
-  Vector3D getNeighborSum(VertexIter v) {
-      HalfedgeIter h = v->halfedge();  
-      Vector3D sum = Vector3D(); 
-      do {
-          HalfedgeIter h_twin = h->twin(); 
-          VertexCIter v = h_twin->vertex(); 
-          sum += v->position;      
-          h = h_twin->next();               
-      } while (h != v->halfedge());
-      return sum;
-  }
+  /* DEPRECATED BC I CANT DO C++ */
+  //Vector3D getNeighborSum(VertexIter v) {
+  //    HalfedgeIter h = v->halfedge();  
+  //    Vector3D sum = Vector3D(); 
+  //    do {
+  //        HalfedgeIter h_twin = h->twin(); 
+  //        VertexCIter v = h_twin->vertex(); 
+  //        sum += v->position;      
+  //        h = h_twin->next();               
+  //    } while (h != v->halfedge());
+  //    return sum;
+  //}
 }
