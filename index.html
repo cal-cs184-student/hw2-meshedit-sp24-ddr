@@ -1,0 +1,685 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CS 184 - HW 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7b4cc4cc-2d65-4932-8ee1-212e51b4cdf0" class="page sans"><header><h1 class="page-title">CS 184 - HW 2</h1><p class="page-description"></p></header><div class="page-body"><p id="787d4f8d-5e28-4e67-a54e-582e43f24408" class="">
+</p><p id="85d2560b-ea0a-40bd-b30e-e6b368a9f3d7" class="">Webpage: <a href="https://cal-cs184-student.github.io/hw2-meshedit-sp24-ddr/">https://cal-cs184-student.github.io/hw2-meshedit-sp24-ddr/</a></p><h2 id="35d9ccc5-f0d1-475b-970c-eeb01d608693" class="">Overview</h2><p id="fc202d16-d6c3-46eb-8e9b-3a8fecd2b4df" class="">In this project, we took coordinates in screen space and mapped them onto 3D objects in world space to create a mesh. We then made use of the Halfedge data structure, to implement vertex-based shading, to flip and split the edges of the mesh, and to upsample the components of the mesh. In doing this, we were able to manipulate the topology of an object.</p><h2 id="4f3f72aa-d942-4802-8808-6f122c843646" class="">Section I - <strong><strong>Bezier Curves and Surfaces</strong></strong></h2><h3 id="dc8c271a-a551-4717-bc5e-82fc9a805ad0" class="">Part 1 - Bezier Curves with 1D de Casteljau Subdivision</h3><p id="754a099c-9592-4845-bffd-1883f5e64c39" class="">De Casteljau’s algorithm recursively interpolates between <code>n-1</code> pairs of points points by value <code>t</code>, until a singular point is produced. In order to evaluate Bezier curves we used de Casteljau’s algorithm for each step, or for each new level of control points.</p><div id="ef74ddab-0cbf-4058-9667-851bccde9a82" class="column-list"><div id="63028bb2-685b-44f4-9af4-91d92912796a" style="width:33.33333333333333%" class="column"><figure id="4e30e3c7-f058-4240-b5eb-60453b4fa806" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled.png"/></a></figure><figure id="aef9817f-2824-45ba-b6d4-c1af87abc6c4" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%201.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%201.png"/></a></figure><p id="b2756346-3dd0-4caf-ba71-63435860bee5" class="">
+</p><figure id="39e5a046-6086-4110-a549-303ac16f9cd5" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%202.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%202.png"/></a></figure></div><div id="992c0e17-8661-4dca-9570-1d2952b4f869" style="width:33.33333333333333%" class="column"><figure id="fa79ed27-8582-43e6-8350-ab5a914d866c" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%203.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%203.png"/></a></figure><figure id="a969e1a8-add9-4af2-bdb0-a6726f6feb79" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%204.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%204.png"/></a></figure><p id="ea034458-9dff-4cfb-b6fa-3089f4f99887" class="">
+</p><figure id="67239f77-83ac-4cbc-a2d3-18eac43c6ec8" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%205.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%205.png"/></a></figure></div><div id="d4dff4e7-dd87-476c-a90a-ea891628b4b0" style="width:33.33333333333333%" class="column"><figure id="2bcf8bd3-ee2a-4c2d-ba84-ebd4b97f245b" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%206.png"><img style="width:959px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%206.png"/></a></figure><figure id="96a5e239-9917-4403-b4fa-8b7c8c6f4b67" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%207.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%207.png"/></a></figure><p id="fd513467-d613-4b77-ac01-f62b84aafdb8" class="">
+</p><figure id="66e8485c-c462-4794-a61b-6d322af6577c" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%208.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%208.png"/></a></figure></div></div><h3 id="460b03c7-07e0-4c8d-b0c3-11eb60bbabfa" class="">Part 2 - Bezier Surfaces with Separable 1D de Casteljau</h3><p id="fe560106-8ff0-407c-acae-ba65b31bd1e1" class="">De Casteljau’s algorithm allows us to evaluate multiple levels of intermediate control points until a single final point is found on the Bezier curve. In part 2, we worked with Bezier surfaces which are comprised of Bezier curves. To find the surface point given x and y of this Bezier surface, we simply iterated through each Bezier curve and found the final point of each with respect to `u` using the recursive algorithm we wrote in the previous part. Next, we took this set of points to create its own &quot;moving&quot; Bezier curve and once again called our De Casteljau’s algorithm to evaluate a single final point given v; the point return is the surface point. </p><p id="cf87debe-e945-4670-86f1-6382bfb0435c" class="">
+</p><figure id="942a8edc-8620-45ad-9efc-681737437d35" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%209.png"><img style="width:624px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%209.png"/></a></figure><p id="63a714c0-cfb9-4cfe-b6ff-85e89e0b5667" class="">
+</p><h2 id="938ea1be-7918-40ba-806d-eb9d09118a83" class="">Section II: Triangle Meshes and Half-Edge Data Structure</h2><h3 id="f0e9edd8-b9f6-4a6a-97f9-315db1a112ad" class="">Part 3 - Area-Weighted Vertex Normals</h3><p id="3e936e9a-08ed-4d06-b306-ed381977597b" class="">To implement the area-weighted vertex normals, we iterated through each triangle in the target vertex’s manifold. In each neighboring triangle we took the vertex’s 2 connecting vectors and computed its cross-product to get our face’s normal vector. Then we got the area of the triangle by multiplying the face’s normal vector by 1/2. After, we summed all of the face’s normal vectors and divided it by its normalization to compute the area weighted normal.</p><div id="3d1d24c6-a66f-4575-aec6-c70211d55d98" class="column-list"><div id="54ebcf1b-7542-4e56-bcd8-fe3d1f7cbefd" style="width:50%" class="column"><figure id="c470d566-9e71-40d8-9f69-9df2887c671e" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2010.png"><img style="width:1642px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2010.png"/></a><figcaption>no shading</figcaption></figure></div><div id="a6dcbc71-399a-46d9-b9fd-357582182180" style="width:49.99999999999999%" class="column"><figure id="fcc4ee17-50b8-4258-a3d9-b8a25d13ea7a" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2011.png"><img style="width:1400px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2011.png"/></a><figcaption>smoothing/shading</figcaption></figure></div></div><h3 id="b8c1396d-0ce5-4602-8af0-fbbdbcb883a3" class="">Part 4 - Edge Flip</h3><p id="96b95b0f-3412-4151-96c3-f5c0494cb8c0" class=""><span style="border-bottom:0.05em solid">Edge Flip Operation Process</span></p><p id="1d87a4bf-c1e4-4f8f-8c27-476d96d07a08" class="">Starting off, we drew out a diagram for the edge flip operation and wrote down all of the pointer assignments. (Warning: we had to debug so these initial assignments may not be correct.)</p><figure id="ef929d0d-553b-4c1d-9f65-c0aa48140f65" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2012.png"><img style="width:1138px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2012.png"/></a></figure><div id="335f450f-e94f-496a-b395-55c73912fa5e" class="column-list"><div id="70921a43-54ac-4b55-b12a-94c02648f6a0" style="width:33.33333333333333%" class="column"><figure id="8b74ae28-e103-4895-aa45-e35e2d70c400" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2013.png"><img style="width:1920px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2013.png"/></a></figure></div><div id="ccc8757e-19e9-4198-8130-d340e6092df6" style="width:33.33333333333333%" class="column"><figure id="2d20cfea-1fd0-4fbb-b4c3-80083b55666f" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2014.png"><img style="width:1920px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2014.png"/></a></figure></div><div id="98e653a3-6577-4dd7-88a7-d1d34a49a4ce" style="width:33.33333333333333%" class="column"><figure id="15fd4b9d-4872-4052-be0a-8fb1ec4d1a4d" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2015.png"><img style="width:1920px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2015.png"/></a></figure></div></div><ol type="1" id="5daee51e-d474-4ee2-b052-7688e864c87e" class="numbered-list" start="1"><li>We stored all the pointers for the current halfedges (h0-h9), vertices (v0-v3), edges (e0-e4), and faces (f0-f1) into variables.</li></ol><ol type="1" id="4554a3ca-39c9-4d30-935d-463505e4a0f6" class="numbered-list" start="2"><li>Then we reassigned all the pointers of the attributes in each halfedge (its next, twin, vertex, edge, and face).</li></ol><ol type="1" id="99f669d3-9f29-4c37-a2c4-15b1d6cfe855" class="numbered-list" start="3"><li>Finally, we reassigned all the halfedge pointers inside of all vertices, edges, and faces.</li></ol><p id="c0d64eef-24db-43fd-bd04-5d07be45b7e8" class=""><span style="border-bottom:0.05em solid">Screenshots</span></p><div id="10a79021-e0a3-43fe-bcbf-c1dd43fc7b00" class="column-list"><div id="14738c58-685c-4828-8c85-ea47f825cf6e" style="width:50%" class="column"><figure id="9e4985ae-e83e-4dd3-877b-d2a48551c118" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"><img style="width:759px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"/></a></figure></div><div id="b0467880-6fff-43da-9b63-709386687fd2" style="width:50%" class="column"><figure id="7aa1122a-91af-472e-8b48-452db2c8c0e4" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2017.png"><img style="width:958px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2017.png"/></a></figure></div></div><p id="d3694ee1-cc84-4540-81ce-7650fc76441f" class=""><span style="border-bottom:0.05em solid">Debugging Journey</span></p><p id="cdc7b066-ea6f-415f-b588-54fe69c374d3" class="">Thankfully, there was no debugging journey for Part 4.</p><h3 id="a46032b4-8f87-4b74-b5b3-59cae0bcdde7" class="">Part 5 - Edge Split</h3><p id="e878e74c-a53e-44fe-8d6a-e4a3c7c640d5" class=""><span style="border-bottom:0.05em solid">Edge Split Operation Process</span></p><p id="24ed397a-0161-443b-8261-1adf708a2606" class="">Similar to the edge flip, we first drew a diagram and wrote down all of the pointer assignments.</p><figure id="28b5a841-493b-4c1f-9f9e-a199a2f0d4f0" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2018.png"><img style="width:1920px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2018.png"/></a></figure><ol type="1" id="7e1003c3-9401-43fc-84ea-02a88b27168b" class="numbered-list" start="1"><li>We stored all the pointers for the current halfedges (h0-h9), vertices (v0-v3), edges (e0-e4), and faces (f0-f1) into variables.</li></ol><ol type="1" id="b52c7067-41a2-4f87-849d-cd5ee24de606" class="numbered-list" start="2"><li>We then instantiated 6 new halfedges, 1 new vertex, 3 new edges, and 2 new faces to account for the additional elements that would appear when the edge was split.<ol type="a" id="b4a32957-1b0b-49f6-8da6-d0bef3b36f94" class="numbered-list" start="1"><li>In order to get the new vertex position, we took the average of the orginal splitting edge’s (e0) connecting vertex positions.</li></ol></li></ol><ol type="1" id="c8fe1d16-6a3b-421a-8b87-e797fb4b91a1" class="numbered-list" start="3"><li>Then we reassigned all the pointers of the attributes in each halfedge (its next, twin, vertex, edge, and face).</li></ol><ol type="1" id="f7d3b531-43d6-4564-8b3a-ffaba5800b6a" class="numbered-list" start="4"><li>Finally, we reassigned all the halfedge pointers inside of all vertices, edges, and faces.<ol type="a" id="fb1f9af3-99ea-449a-bcbd-43e91a23fb32" class="numbered-list" start="1"><li>We also had to change the 2 new edges’s (e5 and e6) <code>isNew</code> attribute to true, since the split creates 1 new long edge segmented into 2.</li></ol></li></ol><p id="826c8f8e-8bc9-4bd7-9579-c7e9b5fac8a1" class=""><span style="border-bottom:0.05em solid">Screenshots</span></p><div id="c35dfa87-f591-453b-8caa-2774017239bf" class="column-list"><div id="7a0ed649-7d6b-4df3-9699-e398755c726e" style="width:50%" class="column"><figure id="1716935d-5218-4aff-8efa-5c9010e6679b" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"><img style="width:759px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"/></a></figure><p id="86c095be-168f-48d9-b8b0-81ece2888f6c" class="">
+</p></div><div id="f424c6d2-df7d-46e8-8f66-2fee24b00e66" style="width:50%" class="column"><figure id="bba5dc0d-3823-4f6d-b1cb-88984f20cf70" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2019.png"><img style="width:961px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2019.png"/></a></figure></div></div><div id="6f7e699f-d0c7-4af6-be48-626448e4fc82" class="column-list"><div id="309438da-d354-40ab-9171-224f4014112d" style="width:50%" class="column"><figure id="f565320e-83e5-4414-877a-f8537bb0deb6" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"><img style="width:759px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2016.png"/></a></figure></div><div id="bc2950a4-5965-4936-a023-dad9d14cffa8" style="width:50%" class="column"><figure id="3d050f36-fa72-47b0-b2ca-a832b2fd6ad2" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2020.png"><img style="width:865px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2020.png"/></a></figure></div></div><p id="78da918f-bc14-4f3d-b500-25aaa2d37cd7" class=""><span style="border-bottom:0.05em solid">Debugging Journey</span></p><p id="4ebe3222-5a28-4682-b501-425fbeb07f38" class="">The main bug we ran into was the operation successfully running, but the face to the west disappearing (which left what looked like a hole). We debugged it by rechecking our diagram and the corresponding code to each pointer. After posting on Edstem to ask for debuggging advice and doubly rechecking our diagram, we eventually realized that the next reassignment in h0’s <code>setNeighbor</code> call was wrong. Instead of h0→next() = h1 the code read h0→next() = h0.</p><figure id="a0c4dac1-4a59-4cb1-b5ce-69f72ef28e88" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2021.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2021.png"/></a></figure><h3 id="4263c306-6620-4700-858c-ebb584c55192" class="">Part 6 - Loop Subdivision</h3><p id="507d765e-f35f-4a5a-9dad-e45ae778d1dd" class=""><span style="border-bottom:0.05em solid">Loop Subdivision Implementation</span></p><ol type="1" id="d0a63485-52e1-431a-a4bc-6d8acbff939d" class="numbered-list" start="1"><li>We started by iterating through each vertex in the mesh to update their old positions.<ol type="a" id="dafdd144-f460-4de5-9792-f54234ebffaa" class="numbered-list" start="1"><li>We iterated through each neighbor to calculate the sum of the neighboring vertex positions.</li></ol><ol type="a" id="5d53bb6d-c3d3-4cfd-984b-a8539b2b6316" class="numbered-list" start="2"><li>Then we calculated the updated vertex position by computing the constant of the vertex according to the formula below (u) and extracting our known vertex degree value (n) and applying this formula: <code>(1 - n * u) * original_position + u * original_neighbor_position_sum</code> .<figure id="ad323cf3-f2d1-4c7f-963a-de55f6480f44" class="image" style="text-align:center"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2022.png"><img style="width:528px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2022.png"/></a></figure></li></ol><ol type="a" id="ee939854-189e-4824-aa46-538b9ad9e357" class="numbered-list" start="3"><li>We then changed the vertex’s <code>isNew</code> attribute to false.</li></ol></li></ol><ol type="1" id="6509ddef-7735-41c4-a583-bc0bcfcd3010" class="numbered-list" start="2"><li>Next, we computed the new vertex positions that will be created by the new edges. To do this, we iterated through the pre-existing edges and found its 4 surrounding vertices that would formulate 2 neighboring triangles (like in the diagram below). We stored the calculated position using this formula, <code>3/8 * (A + B) + 1/8 * (C + D)</code>, and stored it in <code>Edge::newPosition</code> . We also changed the edge’s <code>isNew</code> value to false.<figure id="f4c6198b-c7fe-410e-bb7e-3af16f46f6d5" class="image" style="text-align:center"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2023.png"><img style="width:192px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2023.png"/></a></figure></li></ol><ol type="1" id="2542c57a-1d77-4feb-96a7-0e483c71a090" class="numbered-list" start="3"><li>Next, we re-iterated through the edges in the mesh and split them using the <code>splitEdge</code> function we created in the previous part. As we split, we updated the returned vertex’s <code>isNew</code> attribute to true and assigned its <code>position</code> to the <code>newPosition</code> stored in the edge.</li></ol><ol type="1" id="6d3edb74-1ae7-4fdf-9668-07244c3deb73" class="numbered-list" start="4"><li>We re-iterated through the edges again, this time using <code>flipEdge</code> to flip edges that were <strong>connected to a new and old vertex</strong>.</li></ol><ol type="1" id="404bbb7a-53a6-49f4-8667-36941cde6110" class="numbered-list" start="5"><li>Finally, we iterated through each vertex in the mesh and copied its <code>newPosition</code> value over to <code>position</code> to update it.</li></ol><p id="600c01a9-1641-4faf-b013-6befd001b4c8" class=""><span style="border-bottom:0.05em solid">Screenshots</span></p><div id="5d41f076-5851-49eb-9c4f-a3b281c0b9b5" class="column-list"><div id="6b8f5681-2925-4ddc-bd91-846f6e9dc058" style="width:50%" class="column"><figure id="76e5d1bd-4e38-4b0b-a6ba-1af4b600133b" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2024.png"><img style="width:733px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2024.png"/></a></figure></div><div id="a433bed9-7afd-4122-bb96-4fac1712f5ec" style="width:50%" class="column"><figure id="07c802a0-e1a1-4377-a6d9-a034d18de094" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2025.png"><img style="width:746px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/Untitled%2025.png"/></a></figure></div></div><p id="939ecade-8f17-4838-a1d4-805d44abd694" class="">After loop subdivision, the triangles of the mesh become smaller and greater in number. Sharp corners and edges are physically smoothed out. You can reduce this effect by pre-splitting edges near the sharp areas and creating a ring or an edge loop around it.</p><p id="7ffbf35e-37cc-4337-bccf-93d33ec62f43" class="">You can pre-process the cube by splitting the faces so each one has a cross on it. This ensures that each face has matching edges and faces. This enables the upsampling to equally split and flip itself. Before, the cube would skew itself to the right when it was upsampled since the faces only had 1 split edge that pointed in the direction of the skew.</p><figure id="e9ddffcf-97d6-4ec6-90fc-d0537aaf3a5a" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/1.png"><img style="width:954px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/1.png"/></a></figure><div id="774a5d36-8d99-4b63-bd66-1e58d968acfa" class="column-list"><div id="422f601a-26b1-4daf-bb62-00edde9e35e9" style="width:50%" class="column"><figure id="a4a8440f-595d-42df-ade7-5c5adb075c3a" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/2.png"><img style="width:955px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/2.png"/></a></figure><figure id="850201b2-ff18-499a-befe-3bea886427ac" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/4.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/4.png"/></a></figure><figure id="8219de95-0d33-41ca-b9a2-e3f9cf2fde3f" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/6.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/6.png"/></a></figure><p id="cb5c0ddd-0ced-47e4-8b6d-fa7639349249" class="">
+</p></div><div id="525aa14b-60ec-4f1d-8a36-dca3423e47cb" style="width:50%" class="column"><figure id="0dcd74af-ca08-4beb-8115-eef42e1c0439" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/3.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/3.png"/></a></figure><figure id="63be34ca-62e0-4d49-bac5-204abbc0ea87" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/5.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/5.png"/></a></figure><figure id="bd4320d9-1919-45f3-8228-1e3af7416471" class="image"><a href="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/7.png"><img style="width:956px" src="CS%20184%20-%20HW%202%207b4cc4cc2d6549328ee1212e51b4cdf0/7.png"/></a></figure><p id="e199aa84-afce-41eb-b1fe-ae18ecc0ab7d" class="">
+</p></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
